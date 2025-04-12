@@ -1,8 +1,8 @@
-import app from './app';
+import "reflect-metadata";
+import appConfig from "./config";
+import server from "./server";
+import "reflect-metadata";
 
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  /* eslint-disable no-console */
-  console.log(`Listening: http://localhost:${port}`);
-  /* eslint-enable no-console */
+server.listen(appConfig.PORT, "localhost", () => {
+    console.info(`Server running on http://localhost:${appConfig.PORT}`);
 });
