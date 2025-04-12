@@ -37,8 +37,7 @@ export class LeadAssignmentService {
         return await this.leadAssignmentRepository.save(data);
     }
 
-    async updateLeadAssignment(data: LeadAssignmentDto): Promise<LeadAssignment | null> {
-       
+    async updateLeadAssignment(data: LeadAssignmentDto): Promise<void | null> {
        
         const leadAssignment = await this.leadAssignmentRepository.get(data.assignmentId as any); // UUIDs are strings
         if (!leadAssignment) return null;
@@ -65,7 +64,7 @@ export class LeadAssignmentService {
         leadAssignment.budget = data.budget || leadAssignment.budget; // Default to 0 if not provided
         leadAssignment.notes = data.notes || leadAssignment.notes; // Default to empty string if not provided
 
-        return await this.leadAssignmentRepository.save(leadAssignment);
+        return await this.leadAssignmentRepository.edit(leadAssignment.assignmentID,leadAssignment);
     }
 
     async getById(id: string): Promise<LeadAssignment | null> {

@@ -3,12 +3,117 @@ import { UserController } from "../controllers";
 
 const router = Router();
 
-router.get("/getall", UserController.getAll);
-
-router.get("/getbyid/:id", UserController.get);
-
+/**
+ * @swagger
+ * /users/adduser:
+ *   post:
+ *     tags:
+ *       - Users
+ *     summary: Create a user
+ *     responses:
+ *       201:
+ *         description: User created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 phone:
+ *                   type: string
+ *                 role:
+ *                   type: string
+ */
 router.post("/adduser", UserController.add);
 
+/**
+ * @swagger
+ * /users/edituser:
+ *   put:
+ *     tags:
+ *       - Users
+ *     summary: Update a user
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 phone:
+ *                   type: string
+ *                 role:
+ *                   type: string
+ */
 router.put("/edituser", UserController.edit);
+
+/**
+ * @swagger
+ * /users/getall:
+ *   get:
+ *     tags:
+ *       - Users
+ *     summary: Get all users
+ *     responses:
+ *       200:
+ *         description: List of users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *                   phone:
+ *                     type: string
+ *                   role:
+ *                     type: string
+ */
+router.get("/getall", UserController.getAll);
+
+/**
+ * @swagger
+ * /users/getbyid/{id}:
+ *   get:
+ *     tags:
+ *       - Users
+ *     summary: Get a user by ID
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: The user ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 phone:
+ *                   type: string
+ *                 role:
+ *                   type: string
+ */
+router.get("/getbyid/:id", UserController.get);
 
 export default router;

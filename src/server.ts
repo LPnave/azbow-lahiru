@@ -4,7 +4,7 @@ import express, {
     Response,
     ErrorRequestHandler,
 } from "express";
-import { LeadRouter, UserRouter } from "./routers";
+import { LeadAssignmentRouter, LeadRouter, UserRouter } from "./routers";
 import logger from "./utils/logger";
 import { HttpException } from "./utils/types";
 import { expressjwt } from "express-jwt";
@@ -58,7 +58,7 @@ const errorRequestHandler: ErrorRequestHandler = (
 server.use(express.json());
 server.use("/users", UserRouter.default);
 server.use("/leads", LeadRouter.default);
-server.use("/leadAssignments", LeadRouter.default);
+server.use("/leadAssignments", LeadAssignmentRouter.default);
 // Swagger route
 server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // server.use("/sessions", SessionRouter.default);
