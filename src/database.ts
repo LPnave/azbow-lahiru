@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 import appConfig from "./config";
+import { User } from "./model"; 
 
 export const AppDataSource = new DataSource({
     type: "postgres", 
@@ -8,6 +9,9 @@ export const AppDataSource = new DataSource({
     username: appConfig.DB_USER,
     password: appConfig.DB_PASSWORD,
     database: appConfig.DB_NAME,
+    entities: [User],
+    synchronize: true, 
+    logging: false,
 });
 
 export const getDbConnection = async () => {

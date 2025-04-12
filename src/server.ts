@@ -4,6 +4,7 @@ import express, {
     Response,
     ErrorRequestHandler,
 } from "express";
+import { UserRouter } from "./routers";
 import logger from "./utils/logger";
 import { HttpException } from "./utils/types";
 import { expressjwt } from "express-jwt";
@@ -54,7 +55,8 @@ server.use(
     // })
 );
 server.use(express.json());
-
+server.use("/users", UserRouter.default);
+// server.use("/sessions", SessionRouter.default);
 server.use((req, _res, next) => {
     if (!req.route) return next(new HttpException(404, "Page not found"));
     next();
