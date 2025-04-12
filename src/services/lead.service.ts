@@ -30,7 +30,15 @@ export class LeadService {
 
         return await this.leadRepository.save(data);
         // return await LeadRepository.get(id as any); // Return updated lead
-      }
+    }
+
+    async getById(id: string): Promise<Lead | null> {
+        return await this.leadRepository.get(id);
+    }
+
+    async getAll(): Promise<Lead[]> {
+        return await this.leadRepository.getAll();
+    }
 }
 
 

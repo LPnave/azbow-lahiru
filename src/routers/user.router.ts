@@ -3,12 +3,12 @@ import { UserController } from "../controllers";
 
 const router = Router();
 
-router.get("/", UserController.getAll);
+router.get("/getall", UserController.getAll);
 
-router.get("/:id", UserController.get);
+router.get("/getbyid/:id", UserController.get);
 
-router.post("/", UserController.add);
+router.post("/adduser", UserController.add);
 
-router.put("/:id", UserController.edit);
+router.put("/edituser", UserController.edit);
 
 export default router;

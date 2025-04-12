@@ -2,32 +2,30 @@ import bcrypt from "bcrypt";
 import { DeepPartial } from "typeorm";
 import { User } from "../model/index";
 import { UserRepository } from "../repositories/index";
+import { UserDto, UserInitialDto } from "../dto/user.dto";
 
 export class UserService {
     constructor(public userRepository: UserRepository) {
         this.userRepository = userRepository;
     }
 
-    async add(user: User): Promise<User> {
+    async add(data: UserInitialDto): Promise<User> {
         const dbUser = new User();
-        dbUser.email = user.email;
-        dbUser.password = await bcrypt.hash(user.password, 10);
-        dbUser.phone = user.phone;
-        dbUser.role = user.role;
+        dbUser.email = data.email;
+        dbUser.password = await bcrypt.hash(data.password, 10);
+        dbUser.phone = data.phone;
+        dbUser.role = data.role;
         return await this.userRepository.save(dbUser);
     }
 
-    async edit(id: number, partialUser: DeepPartial<User>): Promise<void> {
-        if (partialUser.id) {
-            delete partialUser.id;
+    async edit(data: UserDto): Promise<void> {
+        if (data.password !== undefined) {
+            data.password = await bcrypt.hash(data.password, 10);
         }
-        if (partialUser.password !== undefined) {
-            partialUser.password = await bcrypt.hash(partialUser.password, 10);
-        }
-        return await this.userRepository.edit(id, partialUser);
+        return await this.userRepository.edit(data.userId, data);
     }
 
-    async getById(id: number): Promise<User | null> {
+    async getById(id: string): Promise<User | null> {
         return await this.userRepository.get(id);
     }
 
