@@ -4,71 +4,116 @@ import { LeadAssignmentController } from "../controllers";
 const router = Router();
 
 /**
- * @swagger 
- * /leads:
+ * @swagger
+ * /leadassignment/assignLead:
  *   post:
- *  summary: Create a lead assignment
+ *     tags:
+ *       - LeadAssignment
+ *     summary: Create a lead assignment
  *     responses:
- *       200:
- *         description: assign a lead.
+ *       201:
+ *         description: Lead assigned successfully
  *         content:
  *           application/json:
  *             schema:
  *               type: object
- *               items:
- *                 type: object
-*/
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 leadId:
+ *                   type: string
+ *                 userId:
+ *                   type: string
+ *                 status:
+ *                   type: string
+ */
 router.post("/assignLead", LeadAssignmentController.createLeadAssignment);
 
 /**
  * @swagger
- * /leads:
+ * /leadassignment/updateLeadAssignment:
  *   put:
- *     summary: Update a lead
+ *     tags:
+ *       - LeadAssignment
+ *     summary: Update a lead assignment
  *     responses:
  *       200:
- *         description: update a lead.
+ *         description: Lead assignment updated successfully
  *         content:
  *           application/json:
  *             schema:
  *               type: object
- *               items:
- *                 type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 leadId:
+ *                   type: string
+ *                 userId:
+ *                   type: string
+ *                 status:
+ *                   type: string
  */
 router.put("/updateLeadAssignment", LeadAssignmentController.updateLeadAssignment);
 
 /**
  * @swagger
- * /leads:
+ * /leadassignment/getall:
  *   get:
- *     summary: Get all leads
+ *     tags:
+ *       - LeadAssignment
+ *     summary: Get all lead assignments
  *     responses:
  *       200:
- *         description: get all leads.
+ *         description: List of lead assignments
  *         content:
  *           application/json:
  *             schema:
- *               type: object
+ *               type: array
  *               items:
  *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   leadId:
+ *                     type: string
+ *                   userId:
+ *                     type: string
+ *                   status:
+ *                     type: string
  */
-router.get("/", LeadAssignmentController.getAll);
+router.get("/getall", LeadAssignmentController.getAll);
 
 /**
  * @swagger
- * /leads:
+ * /leadassignment/getbyid/{id}:
  *   get:
- *     summary: Get a lead by ID
+ *     tags:
+ *       - LeadAssignment
+ *     summary: Get a lead assignment by ID
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: Lead assignment ID
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: get a lead by ID.
+ *         description: Lead assignment retrieved successfully
  *         content:
  *           application/json:
  *             schema:
  *               type: object
- *               items:
- *                 type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 leadId:
+ *                   type: string
+ *                 userId:
+ *                   type: string
+ *                 status:
+ *                   type: string
  */
-router.get("/:id", LeadAssignmentController.get);
+router.get("/getbyid/:id", LeadAssignmentController.get);
 
 export default router;
