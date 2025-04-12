@@ -1,20 +1,18 @@
-import { createConnection, Connection } from "typeorm";
+import { DataSource } from "typeorm";
 import appConfig from "./config";
 
-let db: Connection | null = null;
+export const AppDataSource = new DataSource({
+    type: "postgres", 
+    host: appConfig.DB_HOST,
+    port: appConfig.PORT,
+    username: appConfig.DB_USER,
+    password: appConfig.DB_PASSWORD,
+    database: appConfig.DB_NAME,
+});
 
-const getDbConnection = async (): Promise<Connection> => {
-    if (db === null) {
-        db = await createConnection({
-            type: "mysql",
-            host: "localhost",
-            port: appConfig.DB_PORT,
-            username: appConfig.DB_USER,
-            password: appConfig.DB_PASSWORD,
-            database: appConfig.DB_NAME,
-        });
+export const getDbConnection = async () => {
+    if (!AppDataSource.isInitialized) {
+        await AppDataSource.initialize();
     }
-    return db;
+    return AppDataSource;
 };
-
-export default getDbConnection;
