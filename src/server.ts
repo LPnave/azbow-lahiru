@@ -4,11 +4,13 @@ import express, {
     Response,
     ErrorRequestHandler,
 } from "express";
-import { UserRouter } from "./routers";
+import { LeadRouter, UserRouter } from "./routers";
 import logger from "./utils/logger";
 import { HttpException } from "./utils/types";
 import { expressjwt } from "express-jwt";
 import appConfig from "./config";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./swagger";
 
 const server = express();
 
@@ -45,17 +47,19 @@ const errorRequestHandler: ErrorRequestHandler = (
     });
 };
 
-server.use(
-    expressjwt({
-        secret: appConfig.JWT_TOKEN_SECRET,
-        algorithms: ["HS256"],
-    })
-    // .unless({
-    //     path: ["/sessions"],
-    // })
-);
+// server.use(
+//     expressjwt({
+//         secret: appConfig.JWT_TOKEN_SECRET,
+//         algorithms: ["HS256"],
+//     }).unless({
+//         path: ["/api-docs"],
+//     })
+// );
 server.use(express.json());
 server.use("/users", UserRouter.default);
+server.use("/leads", LeadRouter.default);
+// Swagger route
+server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // server.use("/sessions", SessionRouter.default);
 server.use((req, _res, next) => {
     if (!req.route) return next(new HttpException(404, "Page not found"));

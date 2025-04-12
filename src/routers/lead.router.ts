@@ -7,6 +7,22 @@ const router = Router();
 
 // router.get("/:id", UserController.get);
 
+/**
+ * @swagger
+ * /leads:
+ *   post:
+ *     summary: Create a lead
+ *     responses:
+ *       200:
+ *         description: create a lead.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               items:
+ *                 type: object
+ */
+
 router.post("/createlead", LeadController.createLead);
 
 // router.put("/:id", UserController.edit);
