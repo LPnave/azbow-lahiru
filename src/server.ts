@@ -58,6 +58,7 @@ const errorRequestHandler: ErrorRequestHandler = (
 server.use(express.json());
 server.use("/users", UserRouter.default);
 server.use("/leads", LeadRouter.default);
+server.use("/leadAssignments", LeadRouter.default);
 // Swagger route
 server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // server.use("/sessions", SessionRouter.default);

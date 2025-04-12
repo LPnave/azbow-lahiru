@@ -2,7 +2,7 @@ import { z } from "zod";
 import { LeadSource, LeadStatus } from "../model/lead";
 
 export const leadSchema = z.object({
-    leadId: z.string().optional(),
+    leadId: z.string().uuid().optional(),
     name: z.string().min(1, "Name is required"),
     email: z.string().email("Invalid email format"),
     phone: z.string().optional(),

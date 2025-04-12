@@ -23,12 +23,12 @@ abstract class BaseRepository<T extends ObjectLiteral> {
         return repo.find();
     }
 
-    async get(id: number): Promise<T | null> {
+    async get(id: string): Promise<T | null> {
         const repo = await this.getRepository();
         return await repo.findOne({ where: { id } as any }) || null;
     }
 
-    async edit(id: number, data: DeepPartial<T>): Promise<void> {
+    async edit(id: string, data: DeepPartial<T>): Promise<void> {
         const repo = await this.getRepository();
         const existing = await this.get(id);
         if (existing) {

@@ -11,7 +11,7 @@ export class LeadAssignment extends BaseEntity {
     @JoinColumn({ name: "leadID" })
     lead!: Lead; // Foreign Key to Lead
 
-    @ManyToOne(() => User, (user) => user.id, { eager: true })
+    @ManyToOne(() => User, (user) => user.userId, { eager: true })
     @JoinColumn({ name: "agentID" })
     agent!: User; // Foreign Key to User (Sales Agent)
 

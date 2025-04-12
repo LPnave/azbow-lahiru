@@ -5,7 +5,12 @@ export enum LeadStatus {
     UNASSIGNED = "Unassigned",
     ASSIGNED = "Assigned",
     RESERVED = "Reserved",
-    CLOSED = "Closed", // You can extend this based on your needs
+    LEGAL_IN_PROGRESS = "LegalInProgress",
+    LEGAL_APPROVED = "LegalApproved",
+    FINANCIAL_IN_PROGRESS = "FinancialInProgress",
+    FINANCIAL_APPROVED = "FinancialApproved",
+    SOLD = "Sold",
+    CLOSED = "Closed",
 }
 
 // Enum for the source of the lead
@@ -13,7 +18,7 @@ export enum LeadSource {
     ZILLOW = "Zillow",
     FACEBOOK = "Facebook",
     LANDING_PAGE = "LandingPage",
-    OTHER = "Other", // You can add more sources as needed
+    OTHER = "Other", 
 }
 
 @Entity()

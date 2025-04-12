@@ -17,6 +17,21 @@ const leadSchema = z.object({
     inquiryDate: z.date(),
 });
 
+export const getAll = async (_req: Request, res: Response) => {
+    const users = await leadService.getAll();
+    res.json(users);
+};
+
+export const get = async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    const user = await leadService.getById(id);
+    if (user === null) {
+        next(new HttpException(404, "Lead not found"));
+    } else {
+        res.json(user);
+    }
+};
+
 export const createLead = async (req: Request, res: Response, next:NextFunction) =>{
     try {
         const leadFromBody = leadSchema.parse(req.body);  
@@ -37,7 +52,6 @@ export const createLead = async (req: Request, res: Response, next:NextFunction)
 } 
 
 export const updateLead = async (req: Request, res: Response, next: NextFunction) => {
-    // const leadID = req.params.id;
     try {
       const updateData = leadSchema.parse(req.body);
   
