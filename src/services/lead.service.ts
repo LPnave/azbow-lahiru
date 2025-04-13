@@ -17,7 +17,7 @@ export class LeadService {
         lead.status = LeadStatus.UNASSIGNED
         lead.source = data.source || "website"; // Default to "website" if not provided
         lead.inquiryDate = new Date(); // Set the current date as createdAt
-        return await this.leadRepository.save(data);
+        return await this.leadRepository.save(lead);
     }
 
     async updateLead(data: LeadDTO): Promise<void | null> {

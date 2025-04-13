@@ -5,8 +5,8 @@ import { Property } from "./property"; // Assuming Property model is imported
 // Enum for reservation status
 export enum ReservationStatus {
     PENDING = "Pending",
-    FINANCIAL_APPROVED = "FinancialApproved",
-    LEGAL_DONE = "LegalDone",
+    IN_PROGRESS = "In Progress",
+    APPROVED = "Approved",
     CANCELLED = "Cancelled",
 }
 
