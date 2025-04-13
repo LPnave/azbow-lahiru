@@ -1,3 +1,31 @@
+# Lahiru Navaratna's ATL Candidate
+
+This app was created using create-express-api template
+Please use the below to start the application
+
+## Install Packages
+
+```
+npm install
+```
+
+## Run Application
+
+```
+npm start
+```
+
+## Initiate Seed data
+
+```
+npm run seed
+```
+
+Kindly update the env file as requried to connect to a postgresql database.
+
+
+The generated README content by the tool is left as it is below
+
 # Express API Starter with Typescript
 
 How to use this template:
