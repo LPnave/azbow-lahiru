@@ -1,12 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 
 export enum UserRole {
     ADMINISTRATOR = 1,
     USER = 2,
 }
 
-@Entity({ name: "users" })
-export class User {
+@Entity()
+export class User extends BaseEntity{
     @PrimaryGeneratedColumn("uuid")
     userId!: string;
 
