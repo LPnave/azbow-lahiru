@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { PropertyController } from "../controllers";
+import { authorize } from "../middleware/authorize";
 
 const router = Router();
 
@@ -24,7 +25,7 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/Property'
  */
-router.post("/createproperty", PropertyController.createProperty);
+router.post("/createproperty", authorize("create:property") ,PropertyController.createProperty);
 
 /**
  * @swagger
@@ -47,7 +48,7 @@ router.post("/createproperty", PropertyController.createProperty);
  *             schema:
  *               $ref: '#/components/schemas/Property'
  */
-router.put("/updateproperty", PropertyController.updateProperty);
+router.put("/updateproperty", authorize("update:property") ,PropertyController.updateProperty);
 
 /**
  * @swagger
@@ -66,7 +67,7 @@ router.put("/updateproperty", PropertyController.updateProperty);
  *               items:
  *                 $ref: '#/components/schemas/Property'
  */
-router.get("/getall", PropertyController.getAll);
+router.get("/getall", authorize("view:property") ,PropertyController.getAll);
 
 /**
  * @swagger
@@ -91,6 +92,6 @@ router.get("/getall", PropertyController.getAll);
  *             schema:
  *               $ref: '#/components/schemas/Property'
  */
-router.get("/getbyid/:id", PropertyController.get);
+router.get("/getbyid/:id", authorize("view:property") ,PropertyController.get);
 
 export default router;

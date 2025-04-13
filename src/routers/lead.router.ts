@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { LeadController } from "../controllers";
+import { authorize } from "../middleware/authorize";
 
 const router = Router();
 
@@ -29,7 +30,7 @@ const router = Router();
  *                 status:
  *                   type: string
  */
-router.post("/createlead", LeadController.createLead);
+router.post("/createlead",authorize("create:leads") ,LeadController.createLead);
 
 /**
  * @swagger
@@ -57,7 +58,7 @@ router.post("/createlead", LeadController.createLead);
  *                 status:
  *                   type: string
  */
-router.put("/updateLead", LeadController.updateLead);
+router.put("/updateLead", authorize("update:leads"), LeadController.updateLead);
 
 /**
  * @swagger
@@ -87,7 +88,7 @@ router.put("/updateLead", LeadController.updateLead);
  *                   status:
  *                     type: string
  */
-router.get("/getall", LeadController.getAll);
+router.get("/getall", authorize("view:leads"),LeadController.getAll);
 
 /**
  * @swagger
@@ -122,6 +123,6 @@ router.get("/getall", LeadController.getAll);
  *                 status:
  *                   type: string
  */
-router.get("/getbyid/:id", LeadController.get);
+router.get("/getbyid/:id", authorize("view:leads"),LeadController.get);
 
 export default router;
