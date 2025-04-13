@@ -5,6 +5,7 @@ import { userRepository } from "../repositories";
 import { createUserService } from "../services";
 import { HttpException } from "../utils/types";
 import { userInitialSchema, userSchema } from "../dto/user.dto";
+import { generateAccessToken, generateRefreshToken } from "../utils/jwt";
 
 const userService = createUserService(userRepository);
 
@@ -70,3 +71,50 @@ export const edit = async (req: Request, res: Response, next: NextFunction) => {
         );
     }
 };
+
+export const login = async (req: Request, res: Response, next:NextFunction) => {
+    try {
+      const { email, password } = req.body;
+  
+      const user = await userService.getByEmail(email);
+      if (!user) {
+        next(new HttpException(400, "Internal server error"));
+
+        return res.status(400).json({ message: "Invalid credentials" });
+      }
+
+      // Check if credentials are valid (service layer logic)
+      const usercreds = await userService.checkCredentials(email, password);
+  
+      if (!usercreds) {
+        next(new HttpException(401, "Invalid credentials"));
+
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+  
+      const payload = {
+        id: user.userId,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      };
+  
+      const accessToken = generateAccessToken(payload);
+      const refreshToken = generateRefreshToken(payload);
+  
+      return res.status(200).json({
+        message: "Authentication successful",
+        accessToken,
+        refreshToken,
+        user: {
+          id: user.userId,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      });
+    } catch (err) {
+        next(new HttpException(500, "Internal server error"));
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  };

@@ -15,6 +15,7 @@ export class UserService {
         dbUser.password = await bcrypt.hash(data.password, 10);
         dbUser.phone = data.phone;
         dbUser.role = data.role;
+        dbUser.name = data.name;
         return await this.userRepository.save(dbUser);
     }
 
