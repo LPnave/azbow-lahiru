@@ -13,11 +13,23 @@ const options: swaggerJSDoc.Options = {
         url: "http://localhost:5000",
       },
     ],
-  },
-  apis: [
-    "./src/routers/*.ts",
-    // "./controllers/index.ts"
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
     ],
+  },
+  apis: ["./src/routers/*.ts"],
 };
+
 
 export const swaggerSpec = swaggerJSDoc(options);
