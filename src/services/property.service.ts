@@ -18,7 +18,7 @@ export class PropertyService {
         property.createdAt = new Date();
         property.updatedAt = new Date();
 
-        return await this.propertyRepository.save(data);
+        return await this.propertyRepository.save(property);
     }
 
     async updateProperty(data: PropertyDTO): Promise<void | null> {

@@ -1,6 +1,7 @@
 import { LeadAssignmentDto } from "../dto/leadassignment.dto";
-import { LeadAssignment } from "../model";
+import { Lead, LeadAssignment, LeadStatus } from "../model";
 import { LeadAssignmentRepository, LeadRepository, UserRepository } from "../repositories";
+import { updateToNextStage } from "../utils/leadStatusOrder";
 
 
 
@@ -24,7 +25,8 @@ export class LeadAssignmentService {
         if (!user) throw new Error("User not found");
 
         const leadAssignment = new LeadAssignment();
-
+        const updatedLead = await updateToNextStage(lead, LeadStatus.ASSIGNED);; // Set the lead status to ASSIGNED
+        lead.status = updatedLead.status!;
 
         leadAssignment.lead = lead;
         leadAssignment.agent = user;

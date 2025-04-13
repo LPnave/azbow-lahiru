@@ -18,17 +18,17 @@ const leadSchema = z.object({
 });
 
 export const getAll = async (_req: Request, res: Response) => {
-    const users = await leadService.getAll();
-    res.json(users);
+    const leads = await leadService.getAll();
+    res.json(leads);
 };
 
 export const get = async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
-    const user = await leadService.getById(id);
-    if (user === null) {
+    const lead = await leadService.getById(id);
+    if (lead === null) {
         next(new HttpException(404, "Lead not found"));
     } else {
-        res.json(user);
+        res.json(lead);
     }
 };
 
