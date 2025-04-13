@@ -4,7 +4,7 @@ import express, {
     Response,
     ErrorRequestHandler,
 } from "express";
-import { LeadAssignmentRouter, LeadRouter, UserRouter } from "./routers";
+import { LeadAssignmentRouter, LeadRouter, PropertyRouter, ReservationRouter, UserRouter } from "./routers";
 import logger from "./utils/logger";
 import { HttpException } from "./utils/types";
 import { expressjwt } from "express-jwt";
@@ -47,21 +47,24 @@ const errorRequestHandler: ErrorRequestHandler = (
     });
 };
 
-// server.use(
-//     expressjwt({
-//         secret: appConfig.JWT_TOKEN_SECRET,
-//         algorithms: ["HS256"],
-//     }).unless({
-//         path: ["/api-docs"],
-//     })
-// );
+// Swagger route
+server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+server.use(
+    expressjwt({
+        secret: appConfig.JWT_TOKEN_SECRET,
+        algorithms: ["HS256"],
+    }).unless({
+        path: ["/api-docs","/users/login"],
+    })
+);
 server.use(express.json());
 server.use("/users", UserRouter.default);
 server.use("/leads", LeadRouter.default);
 server.use("/leadAssignments", LeadAssignmentRouter.default);
-// Swagger route
-server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-// server.use("/sessions", SessionRouter.default);
+server.use("/property",PropertyRouter.default)
+server.use("/reservation",ReservationRouter.default)
+
 server.use((req, _res, next) => {
     if (!req.route) return next(new HttpException(404, "Page not found"));
     next();

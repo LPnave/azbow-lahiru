@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { ReservationController } from "../controllers";
+import { authorize } from "../middleware/authorize";
 
 const router = Router();
 
@@ -38,7 +39,7 @@ const router = Router();
  *       201:
  *         description: Reservation created successfully
  */
-router.post("/createreservation", ReservationController.createReservation);
+router.post("/createreservation", authorize("create:reservations") ,ReservationController.createReservation);
 
 /**
  * @swagger
@@ -70,7 +71,7 @@ router.post("/createreservation", ReservationController.createReservation);
  *       200:
  *         description: Reservation updated successfully
  */
-router.put("/updatereservation", ReservationController.updateReservation);
+router.put("/updatereservation", authorize("update:reservations") ,ReservationController.updateReservation);
 
 /**
  * @swagger
@@ -89,7 +90,7 @@ router.put("/updatereservation", ReservationController.updateReservation);
  *               items:
  *                 type: object
  */
-router.get("/getall", ReservationController.getAll);
+router.get("/getall", authorize("view:reservations") ,ReservationController.getAll);
 
 /**
  * @swagger
@@ -113,6 +114,6 @@ router.get("/getall", ReservationController.getAll);
  *             schema:
  *               type: object
  */
-router.get("/getbyid/:id", ReservationController.get);
+router.get("/getbyid/:id", authorize("view:reservations") ,ReservationController.get);
 
 export default router;

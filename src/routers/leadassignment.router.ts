@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { LeadAssignmentController } from "../controllers";
+import { authorize } from "../middleware/authorize";
 
 const router = Router();
 
@@ -27,7 +28,7 @@ const router = Router();
  *                 status:
  *                   type: string
  */
-router.post("/assignLead", LeadAssignmentController.createLeadAssignment);
+router.post("/assignLead",authorize("create:leadassignments") ,LeadAssignmentController.createLeadAssignment);
 
 /**
  * @swagger
@@ -53,7 +54,7 @@ router.post("/assignLead", LeadAssignmentController.createLeadAssignment);
  *                 status:
  *                   type: string
  */
-router.put("/updateLeadAssignment", LeadAssignmentController.updateLeadAssignment);
+router.put("/updateLeadAssignment", authorize("update:leadassignments") ,LeadAssignmentController.updateLeadAssignment);
 
 /**
  * @swagger
@@ -81,7 +82,7 @@ router.put("/updateLeadAssignment", LeadAssignmentController.updateLeadAssignmen
  *                   status:
  *                     type: string
  */
-router.get("/getall", LeadAssignmentController.getAll);
+router.get("/getall", authorize("view:leadassignments") ,LeadAssignmentController.getAll);
 
 /**
  * @swagger
@@ -114,6 +115,6 @@ router.get("/getall", LeadAssignmentController.getAll);
  *                 status:
  *                   type: string
  */
-router.get("/getbyid/:id", LeadAssignmentController.get);
+router.get("/getbyid/:id", authorize("view:assignments") ,LeadAssignmentController.get);
 
 export default router;
