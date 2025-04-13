@@ -115,5 +115,28 @@ router.get("/getall", UserController.getAll);
  *                   type: string
  */
 router.get("/getbyid/:id", UserController.get);
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     tags:
+ *       - Users
+ *     summary: User login
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login successful
+ */
+router.post('/login', UserController.login);
 
 export default router;
